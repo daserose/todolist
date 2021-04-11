@@ -1,0 +1,24 @@
+version: "2"
+
+services:
+
+  redis-master:
+    image: redis:3.2.9
+    ports:
+      - "6379"
+
+  redis-slave:
+    image: myredisslave
+    ports:
+      - "6379"
+    environment:
+      - GET_HOSTS_FROM=dns
+
+  frontend:
+    image: todolist
+    ports:
+      - "80:80"
+    environment:
+      - GET_HOSTS_FROM=dns
+    labels:
+      kompose.service.type: LoadBalancer
