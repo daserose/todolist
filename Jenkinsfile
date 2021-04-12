@@ -60,7 +60,7 @@ pipeline {
         // }
         stage('terraform init') {
             steps {
-                withAWS(credentials: 'aws_credentials'){
+                withAWS(credentials: 'aws-credentials'){
                     sh 'terraform init'
                 }
             }
