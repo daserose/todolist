@@ -3,57 +3,66 @@ pipeline {
     environment { // the env vars are visible for all stages
         DOCKERHUB = credentials('dockerHub')
     }
-
+    tools {
+        terraform 'terraform-0.14.7'
+    }
     stages {
-        stage('build docker redis slave image') {
+        // stage('build docker redis slave image') {
+        //     steps {
+        //         script {
+        //             dockerSlaveImage = docker.build("${DOCKERHUB_USR}/redis_slave", "-f Dockerfile_redis_slave .")
+        //         }
+        //     }
+        // }
+        // stage('build docker project image') {
+        //     steps {
+        //         script {
+        //             dockerImage = docker.build("${DOCKERHUB_USR}/todolist")
+        //         }
+        //     }
+        // }
+        // stage('push docker image') {
+        //     steps {              
+        //         script {
+        //             docker.withServer('', DOCKERHUB) {
+        //                 dockerSlaveImage.push()
+        //                 dockerImage.push()
+        //                 // to add specifig tag
+        //                 // dockerImage.push(spec_tag)
+        //               }
+        //         }
+        //     }
+        // }
+        // stage('clear') {
+        //     steps {
+        //         sh 'docker system prune --all -f'
+        //     }
+        // }
+        // stage('docker-compose build') {
+        //     steps {
+        //         sh 'docker-compose build'
+        //     }
+        // }
+        // stage('docker-compose up') {
+        //     steps {    
+        //         sh 'docker-compose build'          
+        //     }
+        // }
+        // stage('docker-compose stop') {
+        //     steps {
+        //         sh 'docker-compose stop'
+        //     }
+        // }
+        // stage('docker-compose down') {
+        //     steps {
+        //         sh 'docker-compose down'
+        //     }
+        // }
+        stage('terraform init') {
             steps {
-                script {
-                    dockerSlaveImage = docker.build("${DOCKERHUB_USR}/redis_slave", "-f Dockerfile_redis_slave .")
+                withAWS(credentials: 'aws_credentials'){
+                    sh 'terraform init'
                 }
-            }
-        }
-        stage('build docker project image') {
-            steps {
-                script {
-                    dockerImage = docker.build("${DOCKERHUB_USR}/todolist")
-                }
-            }
-        }
-        stage('push docker image') {
-            steps {              
-                script {
-                    docker.withServer('', DOCKERHUB) {
-                        dockerSlaveImage.push()
-                        dockerImage.push()
-                        // to add specifig tag
-                        // dockerImage.push(spec_tag)
-                      }
-                }
-            }
-        }
-        stage('clear') {
-            steps {
-                sh 'docker system prune --all -f'
-            }
-        }
-        stage('docker-compose build') {
-            steps {
-                sh 'docker-compose build'
-            }
-        }
-        stage('docker-compose up') {
-            steps {    
-                sh 'docker-compose build'          
-            }
-        }
-        stage('docker-compose stop') {
-            steps {
-                sh 'docker-compose stop'
-            }
-        }
-        stage('docker-compose down') {
-            steps {
-                sh 'docker-compose down'
             }
         }
     }
