@@ -65,6 +65,13 @@ pipeline {
                 }
             }
         }
+        stage('terraform plan') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform plan'
+                }
+            }
+        }
     }
 }
 
