@@ -72,6 +72,20 @@ pipeline {
                 }
             }
         }
+        stage('terraform apply') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform apply "tfplan"'
+                }
+            }
+        }
+        stage('clusters list') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'aws --region us-east-2 eks list-clusters'
+                }
+            }
+        }
     }
 }
 
