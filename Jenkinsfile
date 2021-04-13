@@ -78,7 +78,7 @@ pipeline {
     //                 sh 'terraform apply "tfplan"'
     //             }
     //         }
-        }
+    //    }
         stage('clusters list') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
