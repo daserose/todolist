@@ -58,13 +58,13 @@ pipeline {
         //         sh 'docker-compose down'
         //     }
         // }
-        // stage('terraform init') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'terraform init'
-        //         }
-        //     }
-        // }
+        stage('terraform init') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform init'
+                }
+            }
+        }
         // stage('terraform plan') {
         //     steps {
         //         withAWS(credentials: 'aws-credentials'){
@@ -89,7 +89,7 @@ pipeline {
         stage('terraform destroy') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform destroy'
+                    sh 'terraform destroy -auto-approve'
                 }
             }
         }
