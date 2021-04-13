@@ -94,25 +94,25 @@ pipeline {
     //        }
     //    }
         
-        stage('get nodes') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'kubectl get nodes'
-                }
-            }
-        }
-        stage('apply -f') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'kubectl apply -f frontend-service.yaml'
-                }
-            }
-        }        
+    //    stage('get nodes') {
+    //        steps {
+    //            withAWS(credentials: 'aws-credentials'){
+    //                sh 'kubectl get nodes'
+    //            }
+    //        }
+    //    }
+    //    stage('apply -f') {
+    //        steps {
+    //            withAWS(credentials: 'aws-credentials'){
+    //                sh 'kubectl apply -f frontend-service.yaml'
+    //            }
+    //        }
+    //    }        
         
         stage('get swc') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'kubectl get swc'
+                    sh 'kubectl get svc'
                 }
             }
         }        
