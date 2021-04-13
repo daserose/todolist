@@ -86,6 +86,20 @@ pipeline {
         //         }
         //     }
         // }
+        // stage('terraform destroy') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform destroy -auto-approve'
+        //         }
+        //     }
+        // }
+        stage('terraform state rm') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform state rm module.eks.kubernetes_config_map.aws_auth'
+                }
+            }
+        }
         stage('terraform destroy') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
