@@ -140,12 +140,12 @@ pipeline {
              }
          }
          stage('terraform destroy') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'terraform destroy -auto-approve'
-        //         }
-        //     }
-        // }
+             steps {
+                 withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
     }
 }
 
