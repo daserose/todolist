@@ -115,7 +115,15 @@ pipeline {
                     sh 'kubectl get svc'
                 }
             }
-        }        
+        } 
+        
+        stage('kubectl delete svc frontend') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'kubectl delete svc frontend'
+                }
+            }
+        } 
         
         // stage('terraform destroy') {
         //     steps {
