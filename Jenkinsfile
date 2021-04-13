@@ -58,31 +58,38 @@ pipeline {
         //         sh 'docker-compose down'
         //     }
         // }
-        stage('terraform init') {
+        // stage('terraform init') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform init'
+        //         }
+        //     }
+        // }
+        // stage('terraform plan') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform plan -out=tfplan'
+        //         }
+        //     }
+        // }
+        // stage('terraform apply') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform apply "tfplan"'
+        //         }
+        //     }
+        // }
+        // stage('clusters list') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'aws --region us-east-2 eks list-clusters'
+        //         }
+        //     }
+        // }
+        stage('terraform destroy') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform init'
-                }
-            }
-        }
-        stage('terraform plan') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform plan -out=tfplan'
-                }
-            }
-        }
-        stage('terraform apply') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform apply "tfplan"'
-                }
-            }
-        }
-        stage('clusters list') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'aws --region us-east-2 eks list-clusters'
+                    sh 'terraform destroy'
                 }
             }
         }
