@@ -86,13 +86,23 @@ pipeline {
                 }
             }
         }
-        stage('update-kubeconfig') {
+    //    stage('update-kubeconfig') {
+    //        steps {
+    //            withAWS(credentials: 'aws-credentials'){
+    //                sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+    //            }
+    //        }
+    //    }
+        
+        stage('get nodes') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+                    sh 'kubectl get nodes'
                 }
             }
         }
+        
+        
         // stage('terraform destroy') {
         //     steps {
         //         withAWS(credentials: 'aws-credentials'){
