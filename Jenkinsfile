@@ -6,7 +6,7 @@ pipeline {
     tools {
         terraform 'terraform-0.14.7'
     }
-    // stages {
+    stages {
     //     stage('build docker redis slave image') {
     //         steps {
     //             script {
