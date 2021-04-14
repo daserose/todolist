@@ -140,21 +140,21 @@ pipeline {
     //        }
     //    }
 
-        // stage('Download Helm') {
-        //     steps {
-        //         script {
-        //             sh (
-        //                 label: "Installing Helm",
-        //                 script: """#!/usr/bin/env bash
-        //                 wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
-        //                 tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
-        //                 mv linux-amd64/helm helm
-        //                 """
-        //             )
-        //             sh 'helm version'                   
-        //         }
-        //     }
-        // }
+        stage('Download Helm') {
+            steps {
+                script {
+                    sh (
+                        label: "Installing Helm",
+                        script: """#!/usr/bin/env bash
+                        wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
+                        tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
+                        mv linux-amd64/helm helm
+                        """
+                    )
+                    sh 'helm version'                   
+                }
+            }
+        }
         
         stage('Deploy datadog agent for Kubernetes') {
             steps {
@@ -164,9 +164,9 @@ pipeline {
                             script :"""helm repo add datadog https://helm.datadoghq.com && \
                             helm repo add stable https://charts.helm.sh/stable && \
                             helm repo update && \
-                            helm install $todolist_cluster -f datadog-values.yaml \
+                            helm install $RELEASE_NAME -f datadog-values.yaml \
                             --set datadog.site='datadoghq.com' \
-                            --set datadog.apiKey=978327f1165c37942215d49aceb3ffc3 datadog/datadog 
+                            --set datadog.apiKey=29de05566ae7878b1ffe846247a76b5b datadog/datadog 
                             """
                         )
                     }
