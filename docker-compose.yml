@@ -8,14 +8,14 @@ services:
       - "6379"
 
   redis-slave:
-    image: myredisslave
+    image: toplaydocker/redis_slave
     ports:
       - "6379"
     environment:
       - GET_HOSTS_FROM=dns
 
   frontend:
-    image: todolist
+    image: toplaydocker/todolist
     ports:
       - "80:80"
     environment:
