@@ -122,13 +122,21 @@ pipeline {
     //        }
     //    }
 
-       stage('kubectl get pods') {
+    //    stage('kubectl get pods') {
+    //        steps {
+    //            withAWS(credentials: 'aws-credentials'){
+    //                sh 'kubectl get pods'
+    //            }
+    //        }
+    //    } 
+
+       stage('kubectl get svc') {
            steps {
                withAWS(credentials: 'aws-credentials'){
-                   sh 'kubectl get pods'
+                   sh 'kubectl get svc'
                }
            }
-       } 
+       }
         
     //     stage('terraform destroy') {
     //         steps {
