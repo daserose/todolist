@@ -118,9 +118,9 @@ pipeline {
                     sh 'kubectl apply -f deployment/frontend-deployment.yaml'
     //                sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
     //                sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
-    //            }
-    //        }
-    //    }
+                }
+            }
+        }
 
     //    stage('kubectl get pods') {
     //        steps {
