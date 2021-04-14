@@ -104,7 +104,7 @@ pipeline {
        stage('apply -f') {
            steps {
                withAWS(credentials: 'aws-credentials'){
-                   sh 'kubectl apply -f frontend-service.yaml'
+                   sh 'kubectl apply -f deployment/frontend-service.yaml'
                }
            }
        }        
