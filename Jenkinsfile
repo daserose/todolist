@@ -112,7 +112,7 @@ pipeline {
         stage('deploy...') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'kubectl apply -f deployment/frontend-service.yaml'
+    //                sh 'kubectl apply -f deployment/frontend-service.yaml'
     //                sh 'kubectl apply -f deployment/redis-master-service.yaml'
     //                sh 'kubectl apply -f deployment/redis-slave-service.yaml'
                     sh 'kubectl apply -f deployment/frontend-deployment.yaml'
@@ -134,8 +134,8 @@ pipeline {
            steps {
                withAWS(credentials: 'aws-credentials'){
                    sh 'kubectl get svc'
-                   sh 'kubectl delete deploy frontend'
                    sh 'kubectl get pods'
+                   sh 'kubectl get nodes'
                }
            }
        }
