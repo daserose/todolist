@@ -133,7 +133,7 @@ pipeline {
        stage('kubectl get svc') {
            steps {
                withAWS(credentials: 'aws-credentials'){
-                   sh 'kubectl get svc frontend'
+                   sh 'kubectl get svc'
                    sh 'kubectl delete deploy frontend'
                    sh 'kubectl get pods'
                }
