@@ -109,18 +109,18 @@ pipeline {
     //        }
     //    }        
          
-       stage('deploy...') {
-           steps {
-               withAWS(credentials: 'aws-credentials'){
-                   sh 'kubectl apply -f deployment/frontend-service.yaml'
-                   sh 'kubectl apply -f deployment/redis-master-service.yaml'
-                   sh 'kubectl apply -f deployment/redis-slave-service.yaml'
-                   sh 'kubectl apply -f deployment/frontend-deployment.yaml'
-                   sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
-                   sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
-               }
-           }
-       }
+    //    stage('deploy...') {
+    //        steps {
+    //            withAWS(credentials: 'aws-credentials'){
+    //                sh 'kubectl apply -f deployment/frontend-service.yaml'
+    //                sh 'kubectl apply -f deployment/redis-master-service.yaml'
+    //                sh 'kubectl apply -f deployment/redis-slave-service.yaml'
+    //                sh 'kubectl apply -f deployment/frontend-deployment.yaml'
+    //                sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
+    //                sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
+    //            }
+    //        }
+    //    }
 
        stage('kubectl get pods') {
            steps {
