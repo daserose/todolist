@@ -134,7 +134,8 @@ pipeline {
            steps {
                withAWS(credentials: 'aws-credentials'){
                    sh 'kubectl delete svc frontend'
-                   sh 'kubectl get deploy '
+                   sh 'kubectl delete deploy frontend'
+                   sh 'kubectl get pods'
                }
            }
        }
