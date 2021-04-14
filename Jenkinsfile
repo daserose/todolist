@@ -38,92 +38,85 @@ pipeline {
                 sh 'docker system prune --all -f'
             }
         }
-        stage('docker-compose build') {
+        // stage('docker-compose build') {
+        //     steps {
+        //         sh 'docker-compose build'
+        //     }
+        // }
+        // stage('docker-compose up') {
+        //     steps {    
+        //         sh 'docker-compose build'          
+        //     }
+        // }
+        // stage('docker-compose stop') {
+        //     steps {
+        //         sh 'docker-compose stop'
+        //     }
+        // }
+        // stage('docker-compose down') {
+        //     steps {
+        //         sh 'docker-compose down'
+        //     }
+        // }
+        stage('terraform init') {
             steps {
-                sh 'docker-compose build'
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform init'
+                }
             }
         }
-        stage('docker-compose up') {
-            steps {    
-                sh 'docker-compose build'          
-            }
-        }
-        stage('docker-compose stop') {
+        stage('terraform plan') {
             steps {
-                sh 'docker-compose stop'
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform plan -out=tfplan'
+                }
             }
         }
-        stage('docker-compose down') {
+        stage('terraform apply') {
             steps {
-                sh 'docker-compose down'
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform apply "tfplan"'
+                }
             }
-        }
-    //     stage('terraform init') {
-    //         steps {
-    //             withAWS(credentials: 'aws-credentials'){
-    //                 sh 'terraform init'
-    //             }
-    //         }
-    //     }
-    //     stage('terraform plan') {
-    //         steps {
-    //             withAWS(credentials: 'aws-credentials'){
-    //                 sh 'terraform plan -out=tfplan'
-    //             }
-    //         }
-    //     }
-    //     stage('terraform apply') {
-    //         steps {
-    //             withAWS(credentials: 'aws-credentials'){
-    //                 sh 'terraform apply "tfplan"'
-    //             }
-    //         }
-    //    }
-    //    stage('clusters list') {
-    //        steps {
-    //            withAWS(credentials: 'aws-credentials'){
-    //                sh 'aws --region us-east-2 eks list-clusters'
-    //            }
-    //        }
-    //    }
-    //    stage('update-kubeconfig') {
-    //        steps {
-    //            withAWS(credentials: 'aws-credentials'){
-    //                sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
-    //            }
-    //        }
-    //    }
+       }
+       stage('clusters list') {
+           steps {
+               withAWS(credentials: 'aws-credentials'){
+                   sh 'aws --region us-east-2 eks list-clusters'
+               }
+           }
+       }
+       stage('update-kubeconfig') {
+           steps {
+               withAWS(credentials: 'aws-credentials'){
+                   sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+               }
+           }
+       }
         
-    //    stage('get nodes') {
-    //        steps {
-    //            withAWS(credentials: 'aws-credentials'){
-    //                sh 'kubectl get nodes'
-    //            }
-    //        }
-    //    }
-    //    stage('apply -f') {
-    //        steps {
-    //            withAWS(credentials: 'aws-credentials'){
-    //                sh 'kubectl apply -f frontend-service.yaml'
-    //            }
-    //        }
-    //    }        
+       stage('get nodes') {
+           steps {
+               withAWS(credentials: 'aws-credentials'){
+                   sh 'kubectl get nodes'
+               }
+           }
+       }
+       stage('apply -f') {
+           steps {
+               withAWS(credentials: 'aws-credentials'){
+                   sh 'kubectl apply -f frontend-service.yaml'
+               }
+           }
+       }        
+         
         
-    //    stage('get swc') {
-    //        steps {
-    //            withAWS(credentials: 'aws-credentials'){
-    //                sh 'kubectl get svc'
-    //            }
-    //        }
-    //    } 
-        
-    //    stage('kubectl delete svc frontend') {
-    //        steps {
-    //            withAWS(credentials: 'aws-credentials'){
-    //                sh 'kubectl delete svc frontend'
-    //            }
-    //        }
-    //    } 
+       stage('kubectl get nodes') {
+           steps {
+               withAWS(credentials: 'aws-credentials'){
+                   sh 'kubectl get nodes'
+               }
+           }
+       } 
         
     //     stage('terraform destroy') {
     //         steps {
