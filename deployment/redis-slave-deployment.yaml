@@ -27,7 +27,7 @@ spec:
       - env:
         - name: GET_HOSTS_FROM
           value: dns
-        image: toplaydocker/redis_slave
+        image: toplaydocker/redis_slave:latest
         imagePullPolicy: ""
         name: redis-slave
         ports:
