@@ -1,6 +1,7 @@
 FROM redis:3.2.9
 
 COPY run_redis.sh /
+RUN chmod 755 /run_redis.sh
 
 CMD /run_redis.sh
 
