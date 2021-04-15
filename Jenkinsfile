@@ -34,11 +34,11 @@ pipeline {
         //         }
         //     }
         // }
-        stage('clear') {
-            steps {
-                sh 'docker system prune --all -f'
-            }
-        }
+        // stage('clear') {
+        //     steps {
+        //         sh 'docker system prune --all -f'
+        //     }
+        // }
         // stage('docker-compose build') {
         //     steps {
         //         sh 'docker-compose build'
@@ -59,20 +59,20 @@ pipeline {
         //         sh 'docker-compose down'
         //     }
         // }
-        stage('terraform init') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform init'
-                }
-            }
-        }
-        stage('terraform plan') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform plan -out=tfplan'
-                }
-            }
-        }
+        // stage('terraform init') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform init'
+        //         }
+        //     }
+        // }
+        // stage('terraform plan') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform plan -out=tfplan'
+        //         }
+        //     }
+        // }
         stage('terraform apply') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
