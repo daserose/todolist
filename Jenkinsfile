@@ -115,41 +115,6 @@ pipeline {
         //         }
         //     }
         // }
-        stage('get svc, deploy') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'kubectl get deploy'
-                    sh 'kubectl get svc'
-                }
-            }
-        }
-
-        // stage('delete deploy, svc') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'kubectl delete svc datadogagentdemo-cluster-agent datadogagentdemo-kube-state-metrics frontend redis-master redis-slave'
-        //             sh 'kubectl delete deploy datadogagentdemo-cluster-agent datadogagentdemo-kube-state-metrics frontend redis-master redis-slave'
-        //         }
-        //     }
-        // }        
-
-        // stage('kubectl get pods') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'kubectl get pods'
-        //         }
-        //     }
-        // } 
-
-        // stage('kubectl get svc') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'kubectl get svc'
-        //             sh 'kubectl get pods'
-        //             sh 'kubectl get nodes'
-        //         }
-        //     }
-        // }
 
         // stage('Download Helm') {
         //     steps {
@@ -189,30 +154,22 @@ pipeline {
     //     }     
     // }
 
-        stage('kubectl get pods') {
+
+        stage('terraform destroy') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'kubectl get pods'
+                    sh 'terraform destroy -auto-approve'
                 }
             }
-        } 
-    }
-
-
-        // stage('terraform destroy') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'terraform destroy -auto-approve'
-        //         }
-        //     }
-        // }
-    //      stage('terraform state rm') {
-    //          steps {
-    //              withAWS(credentials: 'aws-credentials'){
-    //                  sh 'terraform state rm module.eks.kubernetes_config_map.aws_auth'
-    //              }
-    //          }
-    //      }
+        }
+        stage('terraform state rm') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform state rm module.eks.kubernetes_config_map.aws_auth'
+                }
+            }
+        }
+    }    
     //      stage('terraform destroy1') {
     //          steps {
     //              withAWS(credentials: 'aws-credentials'){
