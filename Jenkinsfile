@@ -172,7 +172,7 @@ pipeline {
         stage('terraform destroy1') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'aws configure'
+                    sh 'aws autoscaling delete-launch-configuration --launch-configuration-name todolist_cluster-worker-group20210415141359652100000001'
                     sh 'aws autoscaling delete-auto-scaling-group --auto-scaling-group-name todolist_cluster-worker-group20210415141359652100000001 --force-delete'
                     sh 'terraform destroy -auto-approve'
                 }
