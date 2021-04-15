@@ -155,13 +155,13 @@ pipeline {
     // }
 
 
-        stage('terraform destroy') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform destroy -auto-approve'
-                }
-            }
-        }
+        // stage('terraform destroy') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform destroy -auto-approve'
+        //         }
+        //     }
+        // }
         stage('terraform state rm') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
@@ -169,13 +169,12 @@ pipeline {
                 }
             }
         }
-    }    
-    //      stage('terraform destroy1') {
-    //          steps {
-    //              withAWS(credentials: 'aws-credentials'){
-    //                 sh 'terraform destroy -auto-approve'
-    //             }
-    //         }
-    //     }
-    // }
+        stage('terraform destroy1') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
+    }
 }
