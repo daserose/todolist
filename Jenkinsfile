@@ -66,42 +66,42 @@ pipeline {
                 }
             }
         }
-        // stage('terraform plan') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'terraform plan -out=tfplan'
-        //         }
-        //     }
-        // }
-    //     stage('terraform apply') {
-    //         steps {
-    //             withAWS(credentials: 'aws-credentials'){
-    //                 sh 'terraform apply "tfplan"'
-    //             }
-    //         }
-    //     }
-    //     stage('clusters list') {
-    //         steps {
-    //             withAWS(credentials: 'aws-credentials'){
-    //                 sh 'aws --region us-east-2 eks list-clusters'
-    //             }
-    //         }
-    //     }
-    //     stage('update-kubeconfig') {
-    //         steps {
-    //             withAWS(credentials: 'aws-credentials'){
-    //                 sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
-    //             }
-    //         }
-    //     }
+        stage('terraform plan') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform plan -out=tfplan'
+                }
+            }
+        }
+        stage('terraform apply') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform apply "tfplan"'
+                }
+            }
+        }
+        stage('clusters list') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'aws --region us-east-2 eks list-clusters'
+                }
+            }
+        }
+        stage('update-kubeconfig') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+                }
+            }
+        }
         
-    //     stage('get nodes') {
-    //         steps {
-    //             withAWS(credentials: 'aws-credentials'){
-    //                 sh 'kubectl get nodes'
-    //             }
-    //         }
-    //     }       
+        stage('get nodes') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'kubectl get nodes'
+                }
+            }
+        }       
          
     //     stage('deploy...') {
     //         steps {
@@ -162,13 +162,7 @@ pipeline {
         //         }
         //     }
         // }
-        // stage('terraform state rm') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'terraform state rm module.eks.kubernetes_config_map.aws_auth'
-        //         }
-        //     }
-        // }
+
         stage('terraform destroy1') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
