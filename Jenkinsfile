@@ -116,6 +116,16 @@ pipeline {
         //     }
         // }
 
+
+        stage('delete deploy, svc') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'kubectl delete svc datadogagentdemo-cluster-agent datadogagentdemo-kube-state-metrics frontend redis-master redis-slave'
+                    sh 'kubectl delete deploy datadogagentdemo-cluster-agent datadogagentdemo-kube-state-metrics frontend redis-master redis-slave'
+                }
+            }
+        }        
+
         // stage('kubectl get pods') {
         //     steps {
         //         withAWS(credentials: 'aws-credentials'){
