@@ -59,41 +59,41 @@ pipeline {
         //         sh 'docker-compose down'
         //     }
         // }
-        stage('terraform init') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform init'
-                }
-            }
-        }
-        stage('terraform plan') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform plan -out=tfplan'
-                }
-            }
-        }
-        stage('terraform apply') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform apply "tfplan"'
-                }
-            }
-        }
-        stage('clusters list') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'aws --region us-east-2 eks list-clusters'
-                }
-            }
-        }
-        stage('update-kubeconfig') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
-                }
-            }
-        }
+        // stage('terraform init') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform init'
+        //         }
+        //     }
+        // }
+        // stage('terraform plan') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform plan -out=tfplan'
+        //         }
+        //     }
+        // }
+        // stage('terraform apply') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform apply "tfplan"'
+        //         }
+        //     }
+        // }
+        // stage('clusters list') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'aws --region us-east-2 eks list-clusters'
+        //         }
+        //     }
+        // }
+        // stage('update-kubeconfig') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+        //         }
+        //     }
+        // }
         
         // stage('get nodes') {
         //     steps {
@@ -132,36 +132,36 @@ pipeline {
         //     }
         // }
         
-        stage('Deploy datadog agent for Kubernetes') {
+    //     stage('Deploy datadog agent for Kubernetes') {
+    //         steps {
+    //             dir('helm/datadog'){
+    //                 withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
+    //                     script {
+    //                         sh (
+    //                             script :"""helm repo add datadog https://helm.datadoghq.com && \
+    //                             helm repo add stable https://charts.helm.sh/stable && \
+    //                             helm repo update && \
+    //                             helm install $RELEASE_NAME -f values.yaml \
+    //                             --set datadog.site='datadoghq.com' \
+    //                             --set datadog.apiKey=29de05566ae7878b1ffe846247a76b5b datadog/datadog \
+    //                             --kubeconfig=/var/lib/jenkins/.kube/config
+    //                             """
+    //                         )
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }     
+    // }
+
+
+        stage('terraform destroy') {
             steps {
-                dir('helm/datadog'){
-                    withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
-                        script {
-                            sh (
-                                script :"""helm repo add datadog https://helm.datadoghq.com && \
-                                helm repo add stable https://charts.helm.sh/stable && \
-                                helm repo update && \
-                                helm install $RELEASE_NAME -f values.yaml \
-                                --set datadog.site='datadoghq.com' \
-                                --set datadog.apiKey=29de05566ae7878b1ffe846247a76b5b datadog/datadog \
-                                --kubeconfig=/var/lib/jenkins/.kube/config
-                                """
-                            )
-                        }
-                    }
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform destroy -auto-approve'
                 }
             }
-        }     
-    }
-
-
-        // stage('terraform destroy') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'terraform destroy -auto-approve'
-        //         }
-        //     }
-        // }
+        }
     //     stage('terraform state rm') {
     //         steps {
     //             withAWS(credentials: 'aws-credentials'){
