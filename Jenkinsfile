@@ -115,16 +115,23 @@ pipeline {
         //         }
         //     }
         // }
-
-
-        stage('delete deploy, svc') {
+        stage('get svc, deploy') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'kubectl delete svc datadogagentdemo-cluster-agent datadogagentdemo-kube-state-metrics frontend redis-master redis-slave'
-                    sh 'kubectl delete deploy datadogagentdemo-cluster-agent datadogagentdemo-kube-state-metrics frontend redis-master redis-slave'
+                    sh 'kubectl get deploy'
+                    sh 'kubectl get svc'
                 }
             }
-        }        
+        }
+
+        // stage('delete deploy, svc') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'kubectl delete svc datadogagentdemo-cluster-agent datadogagentdemo-kube-state-metrics frontend redis-master redis-slave'
+        //             sh 'kubectl delete deploy datadogagentdemo-cluster-agent datadogagentdemo-kube-state-metrics frontend redis-master redis-slave'
+        //         }
+        //     }
+        // }        
 
         // stage('kubectl get pods') {
         //     steps {
