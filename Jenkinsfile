@@ -116,21 +116,21 @@ pipeline {
         //     }
         // }
 
-        stage('Download Helm') {
-            steps {
-                script {
-                    sh (
-                        label: "Installing Helm",
-                        script: """#!/usr/bin/env bash
-                        wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
-                        tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
-                        mv linux-amd64/helm helm
-                        """
-                    )
-                    sh 'helm version'                   
-                }
-            }
-        }
+        // stage('Download Helm') {
+        //     steps {
+        //         script {
+        //             sh (
+        //                 label: "Installing Helm",
+        //                 script: """#!/usr/bin/env bash
+        //                 wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
+        //                 tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
+        //                 mv linux-amd64/helm helm
+        //                 """
+        //             )
+        //             sh 'helm version'                   
+        //         }
+        //     }
+        // }
         
         stage('Deploy datadog agent for Kubernetes') {
             steps {
