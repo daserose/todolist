@@ -172,6 +172,7 @@ pipeline {
         stage('terraform destroy1') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform state rm module.influxdb.module.ecs_cluster.aws_launch_configuration.ecs'
                     sh 'terraform destroy -auto-approve'
                 }
             }
