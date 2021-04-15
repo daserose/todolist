@@ -37,7 +37,7 @@ pipeline {
             steps {
                 sh 'docker system prune --all -f'
             }
-        // }
+        }
         // stage('docker-compose build') {
         //     steps {
         //         sh 'docker-compose build'
@@ -170,6 +170,7 @@ pipeline {
             }
         }
     }
+
 
         // stage('terraform destroy') {
         //     steps {
