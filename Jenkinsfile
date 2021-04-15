@@ -80,41 +80,41 @@ pipeline {
         //         }
         //     }
         // }
-        stage('clusters list') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'aws --region us-east-2 eks list-clusters'
-                }
-            }
-        }
-        stage('update-kubeconfig') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
-                }
-            }
-        }
+        // stage('clusters list') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'aws --region us-east-2 eks list-clusters'
+        //         }
+        //     }
+        // }
+        // stage('update-kubeconfig') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+        //         }
+        //     }
+        // }
         
-        stage('get nodes') {
+        // stage('get nodes') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'kubectl get nodes'
+        //         }
+        //     }
+        // }       
+         
+        stage('deploy...') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'kubectl get nodes'
+                    sh 'kubectl apply -f deployment/frontend-service.yaml'
+                    sh 'kubectl apply -f deployment/redis-master-service.yaml'
+                    sh 'kubectl apply -f deployment/redis-slave-service.yaml'
+                    sh 'kubectl apply -f deployment/frontend-deployment.yaml'
+                    sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
+                    sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
                 }
             }
-        }       
-         
-    //     stage('deploy...') {
-    //         steps {
-    //             withAWS(credentials: 'aws-credentials'){
-    //                 sh 'kubectl apply -f deployment/frontend-service.yaml'
-    //                 sh 'kubectl apply -f deployment/redis-master-service.yaml'
-    //                 sh 'kubectl apply -f deployment/redis-slave-service.yaml'
-    //                 sh 'kubectl apply -f deployment/frontend-deployment.yaml'
-    //                 sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
-    //                 sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
-    //             }
-    //         }
-    //     }
+        }
 
     //     stage('Download Helm') {
     //         steps {
