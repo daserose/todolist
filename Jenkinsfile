@@ -143,7 +143,7 @@ pipeline {
                                 helm repo update && \
                                 helm install $RELEASE_NAME -f values.yaml \
                                 --set datadog.site='datadoghq.com' \
-                                --set datadog.apiKey=29de05566ae7878b1ffe846247a76b5b datadog/datadog \
+                                --set datadog.apiKey=978327f1165c37942215d49aceb3ffc3 datadog/datadog \
                                 --kubeconfig=/var/lib/jenkins/.kube/config
                                 """
                             )
