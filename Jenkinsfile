@@ -169,6 +169,8 @@ pipeline {
                 }
             }
         }
+    }
+}
 
         // stage('terraform destroy') {
         //     steps {
@@ -192,5 +194,4 @@ pipeline {
     //         }
     //     }
     // }
-    }
-}
+    
