@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment { // the env vars are visible for all stages
         DOCKERHUB = credentials('dockerHub')
+        RELEASE_NAME = "datadogagentdemo"
     }
     tools {
         terraform 'terraform-0.14.7'
