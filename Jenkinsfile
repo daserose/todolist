@@ -163,12 +163,12 @@ pipeline {
         //     }
         // }
 
-        stage('terraform destroy1') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform destroy -auto-approve'
-                }
-            }
-        }
+        // stage('terraform destroy1') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform destroy -auto-approve'
+        //         }
+        //     }
+        // }
     }
 }
