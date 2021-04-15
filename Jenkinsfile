@@ -172,7 +172,7 @@ pipeline {
         stage('terraform destroy1') {
             steps {
                 withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform state rm module.influxdb.module.ecs_cluster.aws_launch_configuration.ecs'
+                    sh 'aws autoscaling delete-auto-scaling-group --auto-scaling-group-name todolist_cluster-worker-group20210415141359652100000001 --force-delete'
                     sh 'terraform destroy -auto-approve'
                 }
             }
