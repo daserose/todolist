@@ -73,13 +73,13 @@ pipeline {
                 }
             }
         }
-        // stage('terraform apply') {
-        //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'terraform apply "tfplan"'
-        //         }
-        //     }
-        // }
+        stage('terraform apply') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform apply "tfplan"'
+                }
+            }
+        }
         // stage('clusters list') {
         //     steps {
         //         withAWS(credentials: 'aws-credentials'){
@@ -169,12 +169,12 @@ pipeline {
         //         }
         //     }
         // }
-        stage('terraform destroy1') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform destroy -auto-approve'
-                }
-            }
-        }
+        // stage('terraform destroy1') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform destroy -auto-approve'
+        //         }
+        //     }
+        // }
     }
 }
