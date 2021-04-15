@@ -72,7 +72,7 @@ module "eks" {
       name                         = "worker-group"
       instance_type                = "t2.micro"
       additional_userdata          = "echo foo bar"
-      asg_desired_capacity         = 3
+      asg_desired_capacity         = 7
       additional_security_group_ids = [aws_security_group.worker_group_mngmnt_one.id,]
     }
   ]
