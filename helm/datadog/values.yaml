@@ -56,7 +56,7 @@ datadog:
   ## * Overall length should not be higher than 80 characters.
   ## Compared to the rules of GKE, dots are allowed whereas they are not allowed on GKE:
   ## https://cloud.google.com/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters#Cluster.FIELDS.name
-  clusterName:  # <CLUSTER_NAME>
+  clusterName: democluster
 
   # datadog.site -- The site of the Datadog intake to send Agent data to
   ## Set to 'datadoghq.eu' to send data to the EU site.
@@ -67,7 +67,7 @@ datadog:
   dd_url:  # https://app.datadoghq.com
 
   # datadog.logLevel -- Set logging verbosity, valid log levels are: trace, debug, info, warn, error, critical, off
-  logLevel: INFO
+  logLevel: DEBUG
 
   # datadog.kubeStateMetricsEnabled -- If true, deploys the kube-state-metrics deployment
   ## ref: https://github.com/kubernetes/charts/tree/master/stable/kube-state-metrics
@@ -181,11 +181,11 @@ datadog:
   logs:
     # datadog.logs.enabled -- Enables this to activate Datadog Agent log collection
     ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup
-    enabled: false
+    enabled: true
 
     # datadog.logs.containerCollectAll -- Enable this to allow log collection for all containers
     ## ref: https://docs.datadoghq.com/agent/basic_agent_usage/kubernetes/#log-collection-setup
-    containerCollectAll: false
+    containerCollectAll: true
 
     # datadog.logs.containerCollectUsingFiles -- Collect logs from files in /var/log/pods instead of using container runtime API
     ## It's usually the most efficient way of collecting logs.
@@ -1024,7 +1024,7 @@ clusterChecksRunner:
   # clusterChecksRunner.replicas -- Number of Cluster Checks Runner instances
   ## If you want to deploy the clusterChecks agent in HA, keep at least clusterChecksRunner.replicas set to 2.
   ## And increase the clusterChecksRunner.replicas according to the number of Cluster Checks.
-  replicas: 2
+  replicas: 1
 
   # clusterChecksRunner.resources -- Datadog clusterchecks-agent resource requests and limits.
   resources: {}
