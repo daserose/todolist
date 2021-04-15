@@ -66,13 +66,13 @@ pipeline {
                 }
             }
         }
-        stage('terraform plan') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform plan -out=tfplan'
-                }
-            }
-        }
+        // stage('terraform plan') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform plan -out=tfplan'
+        //         }
+        //     }
+        // }
     //     stage('terraform apply') {
     //         steps {
     //             withAWS(credentials: 'aws-credentials'){
