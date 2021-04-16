@@ -80,28 +80,28 @@ pipeline {
         //          }
         //      }
         //  }
-        //  stage('clusters list') {
-        //      steps {
-        //          withAWS(credentials: 'aws-credentials'){
-        //              sh 'aws --region us-east-2 eks list-clusters'
-        //          }
-        //      }
-        //  }
-        //  stage('update-kubeconfig') {
-        //      steps {
-        //          withAWS(credentials: 'aws-credentials'){
-        //              sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
-        //          }
-        //      }
-        //  }
+         stage('clusters list') {
+             steps {
+                 withAWS(credentials: 'aws-credentials'){
+                     sh 'aws --region us-east-2 eks list-clusters'
+                 }
+             }
+         }
+         stage('update-kubeconfig') {
+             steps {
+                 withAWS(credentials: 'aws-credentials'){
+                     sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+                 }
+             }
+         }
         
-        //  stage('get nodes') {
-        //      steps {
-        //          withAWS(credentials: 'aws-credentials'){
-        //              sh 'kubectl get nodes'
-        //          }
-        //      }
-        //  }       
+         stage('get nodes') {
+             steps {
+                 withAWS(credentials: 'aws-credentials'){
+                     sh 'kubectl get nodes'
+                 }
+             }
+         }       
         
          stage('deploy...') {
              steps {
