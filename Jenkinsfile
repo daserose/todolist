@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment { // the env vars are visible for all stages
         DOCKERHUB = credentials('dockerHub')
-        RELEASE_NAME = "datadogagentdemo"
+        RELEASE_NAME = "demo"
     }
     tools {
         terraform 'terraform-0.14.7'
@@ -143,7 +143,7 @@ pipeline {
                                 helm repo update && \
                                 helm install $RELEASE_NAME -f values.yaml \
                                 --set datadog.site='datadoghq.com' \
-                                --set datadog.apiKey=978327f1165c37942215d49aceb3ffc3 datadog/datadog \
+                                --set datadog.apiKey=0ae54de72400cfc6a41628d3db07a589 datadog/datadog \
                                 --kubeconfig=/var/lib/jenkins/.kube/config
                                 """
                             )
