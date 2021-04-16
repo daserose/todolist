@@ -59,78 +59,78 @@ pipeline {
         //          sh 'docker-compose down'
         //      }
         //  }
-         stage('terraform init') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'terraform init'
-                 }
-             }
-         }
-         stage('terraform plan') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'terraform plan -out=tfplan'
-                 }
-             }
-         }
-         stage('terraform apply') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'terraform apply "tfplan"'
-                 }
-             }
-         }
-         stage('clusters list') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'aws --region us-east-2 eks list-clusters'
-                 }
-             }
-         }
-         stage('update-kubeconfig') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
-                 }
-             }
-         }
-        
-         stage('get nodes') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'kubectl get nodes'
-                 }
-             }
-         }       
-        
-        //  stage('deploy...') {
+        //  stage('terraform init') {
         //      steps {
         //          withAWS(credentials: 'aws-credentials'){
-        //              sh 'kubectl apply -f deployment/frontend-service.yaml'
-        //              sh 'kubectl apply -f deployment/redis-master-service.yaml'
-        //              sh 'kubectl apply -f deployment/redis-slave-service.yaml'
-        //              sh 'kubectl apply -f deployment/frontend-deployment.yaml'
-        //              sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
-        //              sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
+        //              sh 'terraform init'
         //          }
         //      }
         //  }
+        //  stage('terraform plan') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'terraform plan -out=tfplan'
+        //          }
+        //      }
+        //  }
+        //  stage('terraform apply') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'terraform apply "tfplan"'
+        //          }
+        //      }
+        //  }
+        //  stage('clusters list') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'aws --region us-east-2 eks list-clusters'
+        //          }
+        //      }
+        //  }
+        //  stage('update-kubeconfig') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+        //          }
+        //      }
+        //  }
+        
+        //  stage('get nodes') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'kubectl get nodes'
+        //          }
+        //      }
+        //  }       
+        
+         stage('deploy...') {
+             steps {
+                 withAWS(credentials: 'aws-credentials'){
+                     sh 'kubectl apply -f deployment/frontend-service.yaml'
+                     sh 'kubectl apply -f deployment/redis-master-service.yaml'
+                     sh 'kubectl apply -f deployment/redis-slave-service.yaml'
+                     sh 'kubectl apply -f deployment/frontend-deployment.yaml'
+                     sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
+                     sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
+                 }
+             }
+         }
 
-        // stage('download Helm') {
-        //     steps {
-        //         script {
-        //             sh (
-        //                 label: "Installing Helm",
-        //                 script: """#!/usr/bin/env bash
-        //                 wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
-        //                 tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
-        //                 mv linux-amd64/helm helm
-        //                 """
-        //             )
-        //             sh 'helm version'                   
-        //         }
-        //     }
-        // }
+        stage('download Helm') {
+            steps {
+                script {
+                    sh (
+                        label: "Installing Helm",
+                        script: """#!/usr/bin/env bash
+                        wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
+                        tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
+                        mv linux-amd64/helm helm
+                        """
+                    )
+                    sh 'helm version'                   
+                }
+            }
+        }
         
         // stage('deploy datadog agent for Kubernetes') {
         //     steps {
