@@ -116,52 +116,52 @@ pipeline {
         //      }
         //  }
 
-        stage('download Helm') {
-            steps {
-                script {
-                    sh (
-                        label: "Installing Helm",
-                        script: """#!/usr/bin/env bash
-                        wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
-                        tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
-                        mv linux-amd64/helm helm
-                        """
-                    )
-                    sh 'helm version'                   
-                }
-            }
-        }
-        
-        stage('deploy datadog agent for Kubernetes') {
-            steps {
-                dir('helm/datadog'){
-                    withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
-                        script {
-                            sh (
-                                script :"""helm repo add datadog https://helm.datadoghq.com && \
-                                helm repo add stable https://charts.helm.sh/stable && \
-                                helm repo update && \
-                                helm install $RELEASE_NAME -f values.yaml \
-                                --set datadog.site='datadoghq.com' \
-                                --set datadog.apiKey=978327f1165c37942215d49aceb3ffc3 datadog/datadog \
-                                --kubeconfig=/var/lib/jenkins/.kube/config
-                                """
-                            )
-                        }
-                    }
-                }
-            }
-        }     
-    //}
-
-
-        // stage('terraform destroy') {
+        // stage('download Helm') {
         //     steps {
-        //         withAWS(credentials: 'aws-credentials'){
-        //             sh 'terraform destroy -auto-approve'
+        //         script {
+        //             sh (
+        //                 label: "Installing Helm",
+        //                 script: """#!/usr/bin/env bash
+        //                 wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
+        //                 tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
+        //                 mv linux-amd64/helm helm
+        //                 """
+        //             )
+        //             sh 'helm version'                   
         //         }
         //     }
         // }
+        
+        // stage('deploy datadog agent for Kubernetes') {
+        //     steps {
+        //         dir('helm/datadog'){
+        //             withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
+        //                 script {
+        //                     sh (
+        //                         script :"""helm repo add datadog https://helm.datadoghq.com && \
+        //                         helm repo add stable https://charts.helm.sh/stable && \
+        //                         helm repo update && \
+        //                         helm install $RELEASE_NAME -f values.yaml \
+        //                         --set datadog.site='datadoghq.com' \
+        //                         --set datadog.apiKey=978327f1165c37942215d49aceb3ffc3 datadog/datadog \
+        //                         --kubeconfig=/var/lib/jenkins/.kube/config
+        //                         """
+        //                     )
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }     
+    //}
+
+
+        stage('terraform destroy') {
+            steps {
+                withAWS(credentials: 'aws-credentials'){
+                    sh 'terraform destroy -auto-approve'
+                }
+            }
+        }
         // stage('terraform state rm') {
         //     steps {
         //         withAWS(credentials: 'aws-credentials'){
