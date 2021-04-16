@@ -95,13 +95,13 @@ pipeline {
         //      }
         //  }
         
-        //  stage('get nodes') {
-        //      steps {
-        //          withAWS(credentials: 'aws-credentials'){
-        //              sh 'kubectl get nodes'
-        //          }
-        //      }
-        //  }       
+         stage('get nodes') {
+             steps {
+                 withAWS(credentials: 'aws-credentials'){
+                     sh 'kubectl get nodes'
+                 }
+             }
+         }       
         
         //  stage('deploy...') {
         //      steps {
@@ -132,28 +132,28 @@ pipeline {
         //     }
         // }
         
-        stage('deploy datadog agent for Kubernetes') {
-            steps {
-                dir('helm/datadog'){
-                    withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
-                        withCredentials([string(credentialsId: 'datadog', variable: 'DATADOG_KEY')]) {
-                            script {
-                                sh (
-                                    script :"""helm repo add datadog https://helm.datadoghq.com && \
-                                    helm repo add stable https://charts.helm.sh/stable && \
-                                    helm repo update && \
-                                    helm install $RELEASE_NAME -f values.yaml \
-                                    --set datadog.site='datadoghq.com' \
-                                    --set datadog.apiKey=${DATADOG_KEY} datadog/datadog \
-                                    --kubeconfig=/var/lib/jenkins/.kube/config
-                                    """
-                                )
-                            }    
-                        }
-                    }
-                }
-            }
-        }     
+        // stage('deploy datadog agent for Kubernetes') {
+        //     steps {
+        //         dir('helm/datadog'){
+        //             withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
+        //                 withCredentials([string(credentialsId: 'datadog', variable: 'DATADOG_KEY')]) {
+        //                     script {
+        //                         sh (
+        //                             script :"""helm repo add datadog https://helm.datadoghq.com && \
+        //                             helm repo add stable https://charts.helm.sh/stable && \
+        //                             helm repo update && \
+        //                             helm install $RELEASE_NAME -f values.yaml \
+        //                             --set datadog.site='datadoghq.com' \
+        //                             --set datadog.apiKey=${DATADOG_KEY} datadog/datadog \
+        //                             --kubeconfig=/var/lib/jenkins/.kube/config
+        //                             """
+        //                         )
+        //                     }    
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }     
     //}
 
 
