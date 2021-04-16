@@ -80,78 +80,78 @@ pipeline {
         //          }
         //      }
         //  }
-         stage('clusters list') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'aws --region us-east-2 eks list-clusters'
-                 }
-             }
-         }
-         stage('update-kubeconfig') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
-                 }
-             }
-         }
+        //  stage('clusters list') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'aws --region us-east-2 eks list-clusters'
+        //          }
+        //      }
+        //  }
+        //  stage('update-kubeconfig') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'aws --region us-east-2 eks update-kubeconfig --name todolist_cluster'
+        //          }
+        //      }
+        //  }
         
-         stage('get nodes') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'kubectl get nodes'
-                 }
-             }
-         }       
+        //  stage('get nodes') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'kubectl get nodes'
+        //          }
+        //      }
+        //  }       
         
-         stage('deploy...') {
-             steps {
-                 withAWS(credentials: 'aws-credentials'){
-                     sh 'kubectl apply -f deployment/frontend-service.yaml'
-                     sh 'kubectl apply -f deployment/redis-master-service.yaml'
-                     sh 'kubectl apply -f deployment/redis-slave-service.yaml'
-                     sh 'kubectl apply -f deployment/frontend-deployment.yaml'
-                     sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
-                     sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
-                 }
-             }
-         }
+        //  stage('deploy...') {
+        //      steps {
+        //          withAWS(credentials: 'aws-credentials'){
+        //              sh 'kubectl apply -f deployment/frontend-service.yaml'
+        //              sh 'kubectl apply -f deployment/redis-master-service.yaml'
+        //              sh 'kubectl apply -f deployment/redis-slave-service.yaml'
+        //              sh 'kubectl apply -f deployment/frontend-deployment.yaml'
+        //              sh 'kubectl apply -f deployment/redis-master-deployment.yaml'
+        //              sh 'kubectl apply -f deployment/redis-slave-deployment.yaml'
+        //          }
+        //      }
+        //  }
 
-        stage('download Helm') {
-            steps {
-                script {
-                    sh (
-                        label: "Installing Helm",
-                        script: """#!/usr/bin/env bash
-                        wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
-                        tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
-                        mv linux-amd64/helm helm
-                        """
-                    )
-                    sh 'helm version'                   
-                }
-            }
-        }
-        
-        // stage('deploy datadog agent for Kubernetes') {
+        // stage('download Helm') {
         //     steps {
-        //         dir('helm/datadog'){
-        //             withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
-        //                 script {
-        //                     sh (
-        //                         script :"""helm repo add datadog https://helm.datadoghq.com && \
-        //                         helm repo add stable https://charts.helm.sh/stable && \
-        //                         helm repo update && \
-        //                         helm install $RELEASE_NAME -f values.yaml \
-        //                         --set datadog.site='datadoghq.com' \
-        //                         --set datadog.apiKey=978327f1165c37942215d49aceb3ffc3 datadog/datadog \
-        //                         --kubeconfig=/var/lib/jenkins/.kube/config
-        //                         """
-        //                     )
-        //                 }
-        //             }
+        //         script {
+        //             sh (
+        //                 label: "Installing Helm",
+        //                 script: """#!/usr/bin/env bash
+        //                 wget https://get.helm.sh/helm-v3.1.0-linux-amd64.tar.gz
+        //                 tar -xvzf helm-v3.1.0-linux-amd64.tar.gz
+        //                 mv linux-amd64/helm helm
+        //                 """
+        //             )
+        //             sh 'helm version'                   
         //         }
         //     }
-        // }     
+        // }
+        
+        stage('deploy datadog agent for Kubernetes') {
+            steps {
+                dir('helm/datadog'){
+                    withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
+                        script {
+                            sh (
+                                script :"""helm repo add datadog https://helm.datadoghq.com && \
+                                helm repo add stable https://charts.helm.sh/stable && \
+                                helm repo update && \
+                                helm install $RELEASE_NAME -f values.yaml \
+                                --set datadog.site='datadoghq.com' \
+                                --set datadog.apiKey=978327f1165c37942215d49aceb3ffc3 datadog/datadog \
+                                --kubeconfig=/var/lib/jenkins/.kube/config
+                                """
+                            )
+                        }
+                    }
+                }
+            }
+        }     
     //}
 
 
