@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment { // the env vars are visible for all stages
         DOCKERHUB = credentials('dockerHub')
-        RELEASE_NAME = "demo"
+        RELEASE_NAME = "demo1"
     }
     tools {
         terraform 'terraform-0.14.7'
