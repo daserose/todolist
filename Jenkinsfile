@@ -136,17 +136,19 @@ pipeline {
             steps {
                 dir('helm/datadog'){
                     withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
-                        script {
-                            sh (
-                                script :"""helm repo add datadog https://helm.datadoghq.com && \
-                                helm repo add stable https://charts.helm.sh/stable && \
-                                helm repo update && \
-                                helm install $RELEASE_NAME -f values.yaml \
-                                --set datadog.site='datadoghq.com' \
-                                --set datadog.apiKey=0ae54de72400cfc6a41628d3db07a589 datadog/datadog \
-                                --kubeconfig=/var/lib/jenkins/.kube/config
-                                """
-                            )
+                        withCredentials([string(credentialsId: 'datadog', variable: 'DATADOG_KEY')]) {
+                            script {
+                                sh (
+                                    script :"""helm repo add datadog https://helm.datadoghq.com && \
+                                    helm repo add stable https://charts.helm.sh/stable && \
+                                    helm repo update && \
+                                    helm install $RELEASE_NAME -f values.yaml \
+                                    --set datadog.site='datadoghq.com' \
+                                    --set datadog.apiKey=${DATADOG_KEY} datadog/datadog \
+                                    --kubeconfig=/var/lib/jenkins/.kube/config
+                                    """
+                                )
+                            }    
                         }
                     }
                 }
