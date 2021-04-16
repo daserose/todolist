@@ -116,7 +116,7 @@ pipeline {
              }
          }
 
-        // stage('Download Helm') {
+        // stage('download Helm') {
         //     steps {
         //         script {
         //             sh (
@@ -132,7 +132,7 @@ pipeline {
         //     }
         // }
         
-        // stage('Deploy datadog agent for Kubernetes') {
+        // stage('deploy datadog agent for Kubernetes') {
         //     steps {
         //         dir('helm/datadog'){
         //             withAWS(credentials: 'aws-credentials', region: 'us-east-2') {
