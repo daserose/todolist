@@ -101,7 +101,8 @@ pipeline {
                      sh 'kubectl get nodes'
                  }
              }
-         }       
+         }   
+        //    
         
         //  stage('deploy...') {
         //      steps {
