@@ -165,13 +165,13 @@ pipeline {
         //         }
         //     }
         // }
-        stage('terraform state rm') {
-            steps {
-                withAWS(credentials: 'aws-credentials'){
-                    sh 'terraform state rm module.eks.kubernetes_config_map.aws_auth'
-                }
-            }
-        }
+        // stage('terraform state rm') {
+        //     steps {
+        //         withAWS(credentials: 'aws-credentials'){
+        //             sh 'terraform state rm module.eks.kubernetes_config_map.aws_auth'
+        //         }
+        //     }
+        // }
         stage('terraform destroy1') {
            steps {
                withAWS(credentials: 'aws-credentials'){
